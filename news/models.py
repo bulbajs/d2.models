@@ -4,6 +4,7 @@ from django.db.models import Sum
 
 
 class Author(models.Model):
+    objects = None
     ratingAuthor = models.IntegerField(default=0)
     authorUser = models.OneToOneField(User, on_delete=models.CASCADE)
 
@@ -15,11 +16,12 @@ class Author(models.Model):
     def update_rating(self):
         postRat = self.post_set.aggregate(postRating=Sum('rating'))
         pRat = 0
-        pRat += postRat.get('postRating') if postRat.get('postRat') else 0
+        pRat += postRat.get('postRating') if postRat.get('postRating') else 0
 
         commentRat = self.authorUser.comment_set.aggregate(commentRating=Sum('rating'))
         cRat = 0
         cRat += commentRat.get('commentRating') if commentRat.get('commentRating') else 0
+
 
         self.ratingAuthor = pRat * 3 + cRat
         self.save()
@@ -27,10 +29,12 @@ class Author(models.Model):
 
 
 class Category(models.Model):
+    objects = None
     name = models.CharField(max_length=128, unique=True)
 
 
 class Post(models.Model):
+    objects = None
     article = 'art'
     news = 'news'
 
@@ -80,15 +84,3 @@ class Comment(models.Model):
         self.rating -= 1
         self.save()
 
-# class News(models.Model):
-#     chapter = models.CharField(max_length=255)
-#     tournaments = models.CharField(max_length=255)
-#     news = models.CharField(max_length=255)
-#     blog = models.CharField(max_length=255)
-#
-# class Tournament(models.Model):
-#     pass
-#
-#
-# class PlayerStat(models.Model):
-#     pass
