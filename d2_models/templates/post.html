@@ -1,14 +1,14 @@
 {% extends "flatpages/default.html" %}
 
 {% block title %}
-news
+post
 {% endblock title %}
 
 
 {% block content %}
 <h2>Свежие новости</h2>
 {% if news %}
-    {{ news }}
+    {{ post }}
 {% else %}
     <h2>Новостей нет</h2>
 {% endif %}
