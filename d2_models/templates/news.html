@@ -6,10 +6,29 @@ news
 
 
 {% block content %}
-<h2>Свежие новости</h2>
-{% if news %}
-    {{ news }}
-{% else %}
-    <h2>Новостей нет</h2>
-{% endif %}
+    <h2> Свежие новости </h2>
+    <hr>
+    {% if news %}
+        <table cellpadding="4">
+            <tr>
+                <th>Заголовок</th>
+                <th>Текст</th>
+                <th>time_out</th>
+                <th>Рейтинг</th>
+            </tr>
+
+        {% for post in news %}
+        <tr>
+            <td>{{ post.title | truncatewords:3 }} </td>
+            <td>{{ post.time_in_Post }} </td>
+            <td>{{ post.time_out }} </td>
+            <td>{{ post.text | truncatechars:20 }} </td>
+
+        </tr>
+        {% endfor %}
+
+        </table>
+    {% else %}
+        <h2>Новостей нет</h2>
+    {% endif %}
 {% endblock content %}
